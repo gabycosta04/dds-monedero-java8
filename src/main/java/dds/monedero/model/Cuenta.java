@@ -72,9 +72,6 @@ public class Cuenta {
 
     validarMontoPositivo(cuanto);
 
-    //LE ESTAMOS DANDO MUCHA RESPONSABILIDAD A LA CLASE NUESTRA PARA CALCULAR LA CANTIDAD DE MOVIMIENTOS SI ES UN DEPOSITO,
-    //CODE SMELL: FEATURE ENVY
-    //PROPOSICION:
     if (depositos.size() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
@@ -87,17 +84,17 @@ public class Cuenta {
   public void sacar(double cuanto) {
 
     validarMontoPositivo(cuanto);
+
     if (getSaldo() - cuanto < 0) {
       throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
     }
-
     double montoExtraidoHoy = this.getMontoExtraidoA(LocalDate.now());
     double limite = 1000 - montoExtraidoHoy;
-
     if (cuanto > limite) {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
           + " diarios, límite: " + limite);
     }
+
     this.agregarExtraccion(LocalDate.now(), cuanto);
     this.saldo -= cuanto;
 

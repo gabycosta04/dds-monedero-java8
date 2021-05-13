@@ -51,16 +51,18 @@ public class MonederoTest {
   @Test
   void ExtraerMasQueElSaldo() {
     assertThrows(SaldoMenorException.class, () -> {
-          cuenta.setSaldo(90);
-          cuenta.sacar(1001);
+          //aca decidimos que lo indicado no era setear ya que sino no respetariamos lo del encapsulamiento,
+          // ademas para agregar saldo, lo indicado seria agregarselo en el constructor o al realizar un deposito
+          Cuenta nueva = nuevaCuenta(90);
+          nueva.sacar(1001);
     });
   }
 
   @Test
   public void ExtraerMasDe1000() {
     assertThrows(MaximoExtraccionDiarioException.class, () -> {
-      cuenta.setSaldo(5000);
-      cuenta.sacar(1001);
+      Cuenta nueva = nuevaCuenta(5000);
+      nueva.sacar(1001);
     });
   }
 
@@ -71,5 +73,13 @@ public class MonederoTest {
     });
   }
 
+
+
+
+
+
+  public Cuenta nuevaCuenta(int montoInicial){
+    return new Cuenta(montoInicial);
+  }
 
 }
