@@ -11,27 +11,23 @@ import java.util.List;
 
 public class Cuenta {
 
-  private double saldo = 0;
+  private double saldo;
   private List<Movimiento> movimientos = new ArrayList<>();
 
-  //aca estas haciendo repeticion de logica, ya que antes establecimos que el saldo tenia el valor = 0, por lo tanto no tendria sentido reasignarle el mismo valor
-  //TODO CODE SMELL: posible Duplicated Code ya que se repite la logica
 
-  public Cuenta() {
-    saldo = 0;
-  }
+
+  //CODE SMELL: posible Duplicated Code ya que se repite la logica
+  //Aca estas haciendo repeticion de logica, ya que antes establecimos que el saldo tenia el valor = 0, por lo tanto no tendria sentido reasignarle el mismo valor
+  //PROPOSICION
+
   public Cuenta(double montoInicial ) {
     saldo = montoInicial;
   }
 
 
-  //PROPOSICION
-  /*
-  public Cuenta(double montoInicial) {
-    //al no ingresar nada queda el valor predeterminado que en el caso de los double 0
-    saldo = montoInicial;
-  }
-  */
+
+
+
 
   //GETTERS Y SETTERS, habria que analizar si es ncesario ver todos, ya que si no tienen funcionalidad para otras clases, no tendria logica declararlos todos
 
@@ -96,6 +92,7 @@ public class Cuenta {
     //new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
     //PROPOSICION:
     this.agregarMovimiento(LocalDate.now(), cuanto, true);
+    this.saldo += cuanto;
   }
 
 
@@ -117,6 +114,7 @@ public class Cuenta {
           + " diarios, límite: " + limite);
     }
     this.agregarMovimiento(LocalDate.now(), cuanto, false);
+    this.saldo -= cuanto;
   }
 
 
