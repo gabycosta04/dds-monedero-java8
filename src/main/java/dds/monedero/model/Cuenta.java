@@ -53,11 +53,12 @@ public class Cuenta {
   //PROPOSICION:
   public void agregarExtraccion(LocalDate fecha, double cuanto) {
     Extraccion movimiento = new Extraccion(fecha, cuanto);
-    extracciones.add(movimiento);
+    saldo = movimiento.calcularValor(this.saldo);
   }
   public void agregarDeposito(LocalDate fecha, double cuanto) {
     Deposito movimiento = new Deposito(fecha, cuanto);
     depositos.add(movimiento);
+    saldo = movimiento.calcularValor(this.saldo);
   }
 
 
@@ -72,7 +73,7 @@ public class Cuenta {
     }
 
     this.agregarDeposito(LocalDate.now(), cuanto);
-    this.saldo += cuanto;
+
   }
 
 
@@ -91,7 +92,6 @@ public class Cuenta {
     }
 
     this.agregarExtraccion(LocalDate.now(), cuanto);
-    this.saldo -= cuanto;
 
   }
 

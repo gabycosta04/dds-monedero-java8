@@ -28,7 +28,6 @@ abstract public class Movimiento {
   public boolean esDeLaFecha(LocalDate fecha) {
     return this.fecha.equals(fecha);
   }
-  //este metodo nose si va a servir de algo
   abstract public double calcularValor(double saldo);
 }
 
