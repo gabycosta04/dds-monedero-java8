@@ -57,18 +57,13 @@ public class Cuenta {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
+  //otro code smell, ya que la funciones de agregateA(Cuenta cuenta) en monedero esta generando acoplamiento de mas entre las clases, ya que no deberia encargarse el movimiento de agregarse a la lista, sino que deberia agregarlo directamente la cuenta
+  //CODE SMELL: MISPLACED METHOD
+  //PROPOSICION:
+  public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
+    Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
+    movimientos.add(movimiento);
+  }
 
 
 
@@ -79,17 +74,12 @@ public class Cuenta {
     validarMontoPositivo(cuanto);
 
     //LE ESTAMOS DANDO MUCHA RESPONSABILIDAD A LA CLASE NUESTRA PARA CALCULAR LA CANTIDAD DE MOVIMIENTOS SI ES UN DEPOSITO,
-    //TODO CODE SMELL: MISPLACED METHOD
+    //TODO CODE SMELL: FEATURE ENVY porque aca se le estan enviando demasiados mensajes a la clase de movimiento, esta funcion deberia resolverla en la clase de movmiento
     if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
 
 
-
-    //otro code smell, ya que esta generando acoplamiento de mas entre las clases, ya que no deberia encargarse el movimiento de agregarse a la lista, sino que deberia agregarlo directamente la cuenta
-    //TODO CODE SMELL: ?????
-    //new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
-    //PROPOSICION:
     this.agregarMovimiento(LocalDate.now(), cuanto, true);
     this.saldo += cuanto;
   }
@@ -116,15 +106,6 @@ public class Cuenta {
     this.saldo -= cuanto;
   }
 
-
-
-
-
-
-  public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
-    Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
-    movimientos.add(movimiento);
-  }
 
 
   public double getMontoExtraidoA(LocalDate fecha) {
