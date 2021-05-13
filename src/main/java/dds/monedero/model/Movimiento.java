@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 //AL HABER SOLO DOS TIPOS DE MOVIME
 abstract public class Movimiento {
-  private LocalDate fecha;
-  private double monto;
+  private final LocalDate fecha;
+  private final double monto;
 
   //NO ES NECESARIA ESTA FUNCION, YA QUE estamos dandole responsabilidad a el movimiento de agregarse en la cuenta,
   // cuando en realidad, la cuenta es la que tiene que agregar el movimiento
@@ -41,6 +41,7 @@ class Deposito extends Movimiento{
   public Deposito(LocalDate fecha, double monto) {
     super(fecha, monto);
   }
+  //TODO public double calcularValor(double saldo): analizar este metodo ya que no se utiliza para nada
   public double calcularValor(double saldo){
     return saldo + this.getMonto();
   }

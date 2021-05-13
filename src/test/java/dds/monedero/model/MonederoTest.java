@@ -29,9 +29,7 @@ public class MonederoTest {
 
   @Test
   void PonerMontoNegativo() {
-    assertThrows(MontoNegativoException.class, () -> {
-      cuenta.poner(-1500);
-    });
+    assertThrows(MontoNegativoException.class, () -> cuenta.poner(-1500));
   }
 
   @Test
@@ -76,9 +74,7 @@ public class MonederoTest {
 
   @Test
   public void ExtraerMontoNegativo() {
-    assertThrows(MontoNegativoException.class, () -> {
-      cuenta.sacar(-500);
-    });
+    assertThrows(MontoNegativoException.class, () -> cuenta.sacar(-500));
   }
 
 

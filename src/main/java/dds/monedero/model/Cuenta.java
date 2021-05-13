@@ -8,15 +8,14 @@ import dds.monedero.exceptions.SaldoMenorException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Cuenta {
 
   private double saldo;
   //DECIDO QUE PARA SER MAS FACIL y no tener que andar preguntando si es un deposito o no, hacer dos diferentes tipos de listas, una para extracciones y otra para depositos
   //private List<Movimiento> movimientos = new ArrayList<>();
-  private List<Extraccion> extracciones = new ArrayList<>();
-  private List<Deposito> depositos = new ArrayList<>();
+  private final List<Extraccion> extracciones = new ArrayList<>();
+  private final List<Deposito> depositos = new ArrayList<>();
 
 
 
@@ -103,7 +102,7 @@ public class Cuenta {
     //PROPOSICION
     return extracciones.stream()
         .filter(movimiento -> movimiento.esDeLaFecha(fecha))
-        .mapToDouble(movimiento -> movimiento.getMonto())
+        .mapToDouble(movimiento -> movimiento.getMonto()) //aca el IDE recomienda remplazar el metodo lambda con otro metodo de referencia, pero no se bien que es
         .sum();
   }
 
