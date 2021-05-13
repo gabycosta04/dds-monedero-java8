@@ -49,26 +49,25 @@ public class Cuenta {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+  //CODE SMELL: Duplicated code en poner y sacar ya que hacen cosas de codigo muy parecidas
   //otros dos posibles code smells sean estos dos que analiza diferentes condiciones y que luego ejecuta una excecpion diferente por cada uno
-  //TODO CODE SMELL: Duplicated code en poner y sacar ya que hacen cosas de codigo muy parecidas
   //proposicion
   private void validarMontoPositivo(double cuanto) {
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
     }
   }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
