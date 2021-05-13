@@ -12,6 +12,13 @@ public class Movimiento {
   private boolean esDeposito;
 
 
+  //NO ES NECESARIA ESTA FUNCION, YA QUE estamos dandole responsabilidad a el movimiento de agregarse en la cuenta,
+  // cuando en realidad, la cuenta es la que tiene que agregar el movimiento
+  //CODE SMELL agregateA(Cuenta cuenta):  posible LARGE CLASS ya que le estamos dando responsabilidad de mas a el movimiento?
+
+
+
+
   //EN VEZ DE TENER UNA VARIABLE BOOLEANA DE SI ES DEPOSITO, le daria mejor esa responsabilidad a una clase
   //que tenga la responsabilidad de realizar ciertas tareas
   //TODO CODE SMELL: PRIMITIVE OBSESSION? ya que estamos representando con booleano, cuando podria ser un obetjo con comportamiento
@@ -58,13 +65,6 @@ public class Movimiento {
     return !esDeposito;
   }
 
-  //NO ES NECESARIA ESTA FUNCION, YA QUE estamos dandole responsabilidad a el movimiento de agregarse en la cuenta,
-  // cuando en realidad, la cuenta es la que tiene que agregar el movimiento
-  //TODO CODE SMELL:  posible LARGE CLASS ya que le estamos dando responsabilidad de mas a el movimiento?
-  public void agregateA(Cuenta cuenta) {
-    cuenta.setSaldo(calcularValor(cuenta));
-    cuenta.agregarMovimiento(fecha, monto, esDeposito);
-  }
 
 
   //ADEMAS NO ES CORRECTO PREGUNTAR SI SE TRATA DE UN DEPOSITO O NO: TODO CODE SMELL: TYPE TEST?
