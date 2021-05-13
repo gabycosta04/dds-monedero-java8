@@ -25,8 +25,6 @@ abstract public class Movimiento {
   public double getMonto() {
     return monto;
   }
-
-
   public boolean esDeLaFecha(LocalDate fecha) {
     return this.fecha.equals(fecha);
   }

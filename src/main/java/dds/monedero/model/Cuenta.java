@@ -39,10 +39,6 @@ public class Cuenta {
     return saldo;
   }
 
-  public void setSaldo(double saldo) {
-    this.saldo = saldo;
-  }
-
   //CODE SMELL: Duplicated code en poner y sacar ya que hacen cosas de codigo muy parecidas
   //otros dos posibles code smells sean estos dos que analiza diferentes condiciones y que luego ejecuta una excecpion diferente por cada uno
   //proposicion
