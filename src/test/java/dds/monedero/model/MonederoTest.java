@@ -15,13 +15,13 @@ public class MonederoTest {
 
   @BeforeEach
   void init() {
-    cuenta = new Cuenta();
+    //convendria que en una cuenta en vez de no ingresar un monto, que en caso de que se quiera comenzar se arranque con 0
+    cuenta = new Cuenta(0);
   }
 
   @Test
   void Poner() {
     cuenta.poner(1500);
-
     assertEquals(cuenta.getSaldo(),1500);
   }
 
@@ -31,10 +31,11 @@ public class MonederoTest {
   }
 
   @Test
-  void TresDepositos() {
+  void TresDepositosEstanPermitidos() {
     cuenta.poner(1500);
     cuenta.poner(456);
     cuenta.poner(1900);
+    assertEquals(cuenta.getSaldo(),1500+456+1900);
   }
 
   @Test
@@ -65,11 +66,10 @@ public class MonederoTest {
 
   @Test
   public void ExtraerMontoNegativo() {
-    assertThrows(MontoNegativoException.class, () -> cuenta.sacar(-500));
+    assertThrows(MontoNegativoException.class, () -> {
+      cuenta.sacar(-500);
+    });
   }
 
-  int retornarMontoFinal(Cuenta cuenta){
-    return cuenta.getMovimientos().stream().mapToDouble()
-  }
 
 }
