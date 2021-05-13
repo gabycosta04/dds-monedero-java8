@@ -52,6 +52,22 @@ public class Cuenta {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //otros dos posibles code smells sean estos dos que analiza diferentes condiciones y que luego ejecuta una excecpion diferente por cada uno
+  //TODO CODE SMELL: Duplicated code en poner y sacar ya que hacen cosas de codigo muy parecidas
+  //proposicion
   private void validarMontoPositivo(double cuanto) {
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
@@ -59,19 +75,22 @@ public class Cuenta {
   }
 
 
-  //otros dos posibles code smells sean estos dos que analiza diferentes condiciones y que luego ejecuta una excecpion diferente por cada uno
-  //TODO CODE SMELL: Duplicated code en poner y sacar ya que hacen cosas de codigo muy parecidas
+
+
+
+
   public void poner(double cuanto) {
 
-    //ADEMAS ESTA EXCEPCION LA REPITE EN LOS METODOS DE PONER Y SACAR
-    //TODO CODE SMELL: ??
-    //PROPOSICION:
     validarMontoPositivo(cuanto);
 
-
+    //LE ESTAMOS DANDO MUCHA RESPONSABILIDAD A LA CLASE NUESTRA PARA CALCULAR LA CANTIDAD DE MOVIMIENTOS SI ES UN DEPOSITO,
+    //TODO CODE SMELL: MISPLACED METHOD
     if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
+
+
+
     //otro code smell, ya que esta generando acoplamiento de mas entre las clases, ya que no deberia encargarse el movimiento de agregarse a la lista, sino que deberia agregarlo directamente la cuenta
     //TODO CODE SMELL: ?????
     //new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
@@ -88,8 +107,11 @@ public class Cuenta {
     if (getSaldo() - cuanto < 0) {
       throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
     }
+
+
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
     double limite = 1000 - montoExtraidoHoy;
+
     if (cuanto > limite) {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
           + " diarios, límite: " + limite);

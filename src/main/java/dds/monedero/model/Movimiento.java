@@ -66,8 +66,7 @@ public class Movimiento {
     cuenta.agregarMovimiento(fecha, monto, esDeposito);
   }
 
-  //NO CREO Q SERIA NECESARIO RECIBIR LA CUENTA COMO PARAMETRO, ya que en realidad lo q se necesitaria seria el valor del saldo
-  //TODO CODE SMELL: ???
+
   //ADEMAS NO ES CORRECTO PREGUNTAR SI SE TRATA DE UN DEPOSITO O NO: TODO CODE SMELL: TYPE TEST?
   public double calcularValor(Cuenta cuenta) {
     if (esDeposito) {
