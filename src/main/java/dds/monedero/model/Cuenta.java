@@ -20,7 +20,7 @@ public class Cuenta {
   public Cuenta() {
     saldo = 0;
   }
-  public Cuenta(double montoInicial) {
+  public Cuenta(double montoInicial ) {
     saldo = montoInicial;
   }
 
