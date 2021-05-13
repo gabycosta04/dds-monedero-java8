@@ -8,6 +8,7 @@ import dds.monedero.exceptions.SaldoMenorException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Cuenta {
 
@@ -30,10 +31,7 @@ public class Cuenta {
 
 
   //GETTERS Y SETTERS, habria que analizar si es ncesario ver todos, ya que si no tienen funcionalidad para otras clases, no tendria logica declararlos todos
-
-  public void setMovimientos(List<Movimiento> movimientos) {
-    this.movimientos = movimientos;
-  }
+  //los setters de movimientos y saldos no son necesarios ya que no los vamos a utilizar fuera
 
   public List<Movimiento> getMovimientos() {
     return movimientos;
@@ -43,9 +41,6 @@ public class Cuenta {
     return saldo;
   }
 
-  public void setSaldo(double saldo) {
-    this.saldo = saldo;
-  }
 
 
 
@@ -65,6 +60,9 @@ public class Cuenta {
     movimientos.add(movimiento);
   }
 
+  public boolean masMovimientosQueLimiteEstablecido(Stream<Movimiento> movimientos, int limite){
+    return movimientos.count() >= limite;
+  }
 
 
 
@@ -74,8 +72,9 @@ public class Cuenta {
     validarMontoPositivo(cuanto);
 
     //LE ESTAMOS DANDO MUCHA RESPONSABILIDAD A LA CLASE NUESTRA PARA CALCULAR LA CANTIDAD DE MOVIMIENTOS SI ES UN DEPOSITO,
-    //TODO CODE SMELL: FEATURE ENVY porque aca se le estan enviando demasiados mensajes a la clase de movimiento, esta funcion deberia resolverla en la clase de movmiento
-    if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
+    //CODE SMELL: FEATURE ENVY
+    //PROPOSICION:
+    if (this.masMovimientosQueLimiteEstablecido(movimientos.stream().filter(movimiento -> movimiento.isDeposito()),3)) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
 
@@ -94,7 +93,6 @@ public class Cuenta {
       throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
     }
 
-
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
     double limite = 1000 - montoExtraidoHoy;
 
@@ -110,9 +108,9 @@ public class Cuenta {
 
   public double getMontoExtraidoA(LocalDate fecha) {
     //TODO CODE SMELL: FEATURE ENVY porque aca se le estan enviando demasiados mensajes a la clase de movimiento, esta funcion deberia resolverla en la clase de movmiento
-    return getMovimientos().stream()
+    return movimientos.stream()
         .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha))
-        .mapToDouble(Movimiento::getMonto)
+        .mapToDouble(movimiento -> movimiento.getMonto())
         .sum();
   }
 
