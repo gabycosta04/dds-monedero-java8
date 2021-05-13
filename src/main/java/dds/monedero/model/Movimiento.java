@@ -28,8 +28,7 @@ abstract public class Movimiento {
   public boolean esDeLaFecha(LocalDate fecha) {
     return this.fecha.equals(fecha);
   }
-
-  //ACA HAY LOGICA REPETIDA, ya que estas analizan lo mismo solo que de formaContraria
+  //este metodo nose si va a servir de algo
   abstract public double calcularValor(double saldo);
 }
 
@@ -45,9 +44,7 @@ class Deposito extends Movimiento{
   public double calcularValor(double saldo){
     return saldo + this.getMonto();
   }
-  public boolean fueDepositado(LocalDate fecha) {
-    return  this.esDeLaFecha(fecha);
-  }
+
 }
 
 
@@ -58,13 +55,6 @@ class Extraccion extends Movimiento{
   public double calcularValor(double saldo){
     return saldo - this.getMonto();
   }
-  public boolean fueExtraido(LocalDate fecha) {
-    return this.esDeLaFecha(fecha);
-  }
-
-
-
-
 
 }
 
